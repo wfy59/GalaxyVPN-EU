@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>赛博朋克未来界面</title>
+    <style>
+        /* --- 定义全局变量 --- */
+        :root {
+            --primary-neon: #00f3ff; /* 青色霓虹 */
+            --secondary-neon: #ff00ff; /* 紫红色霓虹 */
+            --bg-dark: #050505;
+            --text-light: #ffffff;
+            --font-stack: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* --- 基础设置 --- */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: var(--font-stack);
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden; /* 防止水平滚动条 */
+        }
+
+        /* --- 动态背景 --- */
+        .background-animate {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            /* 创建一个深色渐变背景并让它移动 */
+            background: linear-gradient(-45deg, #0a0a0a, #130013, #001313, #0a0a0a);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- 主容器 Layout --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* --- Hero 区域 --- */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        /* --- 故障艺术 (Glitch) 标题 --- */
+        .glitch-title {
+            font-size: 4rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            position: relative;
+            text-shadow: 0.05em 0 0 var(--secondary-neon), -0.03em -0.04em 0 var(--primary-neon);
+            animation: glitch 725ms infinite;
+        }
+
+        .glitch-title::before,
+        .glitch-title::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch-title::before {
+            left: 2px;
+            text-shadow: -2px 0 var(--secondary-neon);
+            clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim 3s infinite linear alternate-reverse;
+        }
+
+        .glitch-title::after {
+            left: -2px;
+            text-shadow: -2px 0 var(--primary-neon);
+            clip: rect(85px, 550px, 140px, 0);
+            animation: glitch-anim 2.5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(10px, 9999px, 30px, 0); transform: skew(0.85deg); }
+            5% { clip: rect(70px, 9999px, 90px, 0); transform: skew(0.05deg); }
+            10% { clip: rect(35px, 9999px, 15px, 0); transform: skew(0.35deg); }
+            /* ... 可以添加更多关键帧让它更随机 */
+            100% { clip: rect(80px, 9999px, 100px, 0); transform: skew(0.1deg); }
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            margin-top: 20px;
+            opacity: 0.8;
+        }
+
+        /* --- 霓虹按钮 --- */
+        .neon-button {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 15px 40px;
+            border: 2px solid var(--primary-neon);
+            color: var(--primary-neon);
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            transition: all 0.4s;
+            overflow: hidden;
+            /* 初始的微弱发光 */
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.3), inset 0 0 10px rgba(0, 243, 255, 0.3);
+        }
+
+        .neon-button:hover {
+            background: var(--primary-neon);
+            color: var(--bg-dark);
+            /* 强烈的悬停发光 */
+            box-shadow: 0 0 50px var(--primary-neon), inset 0 0 20px var(--primary-neon);
+        }
+
+        /* --- 特性卡片区域 (Grid Layout) --- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            width: 100%;
+        }
+
+        /* --- 磨砂玻璃卡片 --- */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03); /* 极低透明度的白色背景 */
+            border-radius: 20px;
+            padding: 40px;
+            text-align: left;
+            /* 磨砂效果核心：背景模糊 */
+            backdrop-filter: blur(10px); 
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px); /* 上浮效果 */
+            border-color: var(--primary-neon);
+            box-shadow: 0 15px 40px -10px rgba(0, 243, 255, 0.4);
+        }
+
+        /* 让中间的卡片显示另一种霓虹色 */
+        .glass-card.accent {
+            border-color: rgba(255, 0, 255, 0.3);
+        }
+        .glass-card.accent:hover {
+            border-color: var(--secondary-neon);
+            box-shadow: 0 15px 40px -10px rgba(255, 0, 255, 0.4);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            /* 文字渐变效果 */
+            background: linear-gradient(90deg, var(--primary-neon), var(--secondary-neon));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glass-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .glass-card p {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+        }
+
+        /* --- 响应式调整 --- */
+        @media (max-width: 768px) {
+            .glitch-title {
+                font-size: 2.5rem;
+            }
+            .subtitle {
+                font-size: 1rem;
+            }
+            .container {
+                padding: 60px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-animate"></div>
+
+    <div class="container">
+        <header class="hero-section">
+            <h1 class="glitch-title" data-text="CYBER FUTURE">
+                CYBER FUTURE
+            </h1>
+            <p class="subtitle">探索下一代 Web 视觉体验。超越现实。</p>
+            <a href="#" class="neon-button">进入系统</a>
+        </header>
+
+        <section class="features-grid">
+            <div class="glass-card">
+                <div class="card-icon">⚡</div>
+                <h3>极速响应</h3>
+                <p>采用最新的 Grid 布局技术，确保在任何设备上都能瞬间加载并流畅运行。告别卡顿，拥抱未来速度。</p>
+            </div>
+
+            <div class="glass-card accent">
+                <div class="card-icon">✨</div>
+                <h3>沉浸视觉</h3>
+                <p>利用 CSS3 高级特性实现的磨砂玻璃与霓虹光影。无需沉重的图片，纯代码构建的视觉盛宴。</p>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-icon">🛡️</div>
+                <h3>未来架构</h3>
+                <p>基于现代浏览器标准的健壮代码。模块化设计，易于扩展，为未来的 Web 3.0 做好准备。</p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // 这里可以添加一些简单的 JavaScript 来增加鼠标交互
+        // 例如：让霓虹按钮在点击时有波纹效果，或者让背景稍微跟随鼠标移动。
+        // 为了保持代码简洁纯粹，当前版本仅使用 CSS 实现所有炫酷效果。
+        console.log("Welcome to the Cyber Future.");
+    </script>
+
+</body>
+</html>
